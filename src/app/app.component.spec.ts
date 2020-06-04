@@ -9,8 +9,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
-
-  let statusBarSpy, splashScreenSpy, platformReadySpy, platformSpy;
+  let statusBarSpy: { styleDefault: any };
+  let splashScreenSpy: { hide: any };
+  let platformReadySpy: Promise<void>;
+  let platformSpy: { ready: any };
 
   beforeEach(async(() => {
     statusBarSpy = jasmine.createSpyObj('StatusBar', ['styleDefault']);
@@ -26,7 +28,7 @@ describe('AppComponent', () => {
         { provide: SplashScreen, useValue: splashScreenSpy },
         { provide: Platform, useValue: platformSpy },
       ],
-      imports: [ RouterTestingModule.withRoutes([])],
+      imports: [RouterTestingModule.withRoutes([])],
     }).compileComponents();
   }));
 
@@ -45,8 +47,8 @@ describe('AppComponent', () => {
   });
 
   it('should have menu labels', async () => {
-    const fixture = await TestBed.createComponent(AppComponent);
-    await fixture.detectChanges();
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
     const app = fixture.nativeElement;
     const menuItems = app.querySelectorAll('ion-label');
     expect(menuItems.length).toEqual(12);
@@ -55,13 +57,16 @@ describe('AppComponent', () => {
   });
 
   it('should have urls', async () => {
-    const fixture = await TestBed.createComponent(AppComponent);
-    await fixture.detectChanges();
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
     const app = fixture.nativeElement;
     const menuItems = app.querySelectorAll('ion-item');
     expect(menuItems.length).toEqual(12);
-    expect(menuItems[0].getAttribute('ng-reflect-router-link')).toEqual('/folder/Inbox');
-    expect(menuItems[1].getAttribute('ng-reflect-router-link')).toEqual('/folder/Outbox');
+    expect(menuItems[0].getAttribute('ng-reflect-router-link')).toEqual(
+      '/folder/Inbox',
+    );
+    expect(menuItems[1].getAttribute('ng-reflect-router-link')).toEqual(
+      '/folder/Outbox',
+    );
   });
-
 });
