@@ -1,0 +1,7 @@
+{
+  "name": "rfs-angular-ionic-sidemenu",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
